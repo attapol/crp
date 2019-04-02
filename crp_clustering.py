@@ -86,7 +86,7 @@ class CRPClusterModel(object):
 	def _gibbs_sampling_crp(self, data):
 		"""Run Gibbs sampling to get the cluster assignment """
 		num_data = len(data)
-		clustering, cluster_assn = self.initialize_assn(data)
+		clustering, cluster_assn = self._initialize_assn(data)
 		for t in range(self.num_iter):
 			num_new_clusters = 0.0
 			for i in range(num_data):
@@ -149,7 +149,7 @@ if __name__ == '__main__':
 	data = numpy.concatenate((stats.norm.rvs(0, 1, size=200), stats.norm.rvs(10,1,size=200), stats.norm.rvs(12, 1, size=200)))
 	random.shuffle(data)
 	crp_model = CRPClusterModel(1.0, example_likelihood_fn)
-	clustering, cluster_assn = crp_model.gibbs_sampling_crp(data)
+	clustering, cluster_assn = crp_model.cluster(data)
 	means = [numpy.mean(data[list(cluster)]) for cluster in clustering]
 	print 'True means are %s.\nCluster means are %s.' % (true_means, means)	
 
